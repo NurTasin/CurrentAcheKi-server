@@ -102,13 +102,14 @@ This is the API documentation for CurrentAcheKi v1.
 | Field       | Type   | Description                               |
 |-------------|--------|-------------------------------------------|
 | `deviceId`      | string | The ID of the device to clear interrupt data for.           |
+| `password`      | string | The password of the device to clear interrupt data for      |
 
 ### Response
 
 | Status Code | Response                          | Description                                          |
 |-------------|----------------------------------|------------------------------------------------------|
 | 200         | Interrupt data was cleared.      | The interrupt data for the device was cleared. |
-| 400         | Device was not found with that ID. | No device was found with the given ID. |
+| 404         | Device was not found with that ID. | No device was found with the given ID and password |
 | 400         | No device ID was provided. | The request was missing the device ID. |
 
 ---

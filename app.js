@@ -153,14 +153,15 @@ app.post("/api/v1/device/remove", async (req, res) => {
 
 app.post("/api/v1/device/interupt/clear", async (req,res)=>{
   const deviceId = req.body.deviceId;
-  if (!deviceId) {
+  const password = req.body.password;
+  if (!deviceId || !password) {
     res.status(400).json({
       error: false,
-      msg: "No device ID was provided."
+      msg: "No device ID or password was provided."
     });
     return;
   }
-  let device_data = await Device.findOne({ deviceId: deviceId });
+  let device_data = await Device.findOne({ deviceId: deviceId, password:password });
   if (device_data) {
     let interuptData = await InteruptData.findOne({ deviceId: device_data.deviceId });
     interuptData.interuptData=[];
@@ -170,9 +171,9 @@ app.post("/api/v1/device/interupt/clear", async (req,res)=>{
       msg: "Interupt data was cleared."
     });
   } else {
-    res.status(400).json({
+    res.status(404).json({
       error: true,
-      msg: "Device was not found with that ID."
+      msg: "Device was not found with that ID and password"
     });
   }
 })
